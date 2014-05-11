@@ -13,6 +13,10 @@ using Cirrious.CrossCore.Platform;
 using Cirrious.MvvmCross.ViewModels;
 using Cirrious.MvvmCross.Views;
 using System.Collections.Generic;
+using Fragment = Android.Support.V4.App.Fragment;
+using FragmentActivity = Android.Support.V4.App.FragmentActivity;
+using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
+using Android.App;
 
 namespace Cirrious.MvvmCross.Droid.Views
 {
@@ -132,11 +136,11 @@ namespace Cirrious.MvvmCross.Droid.Views
             ViewDetails details = new ViewDetails();
 
             var viewType = GetViewType(request.ViewModelType);
-            if (typeof(MvxFragment).IsAssignableFrom(viewType))
+            if (typeof(Fragment).IsAssignableFrom(viewType))
             {
                 details.category = ViewCategory.Fragment;
             }
-            else if (typeof(MvxActivity).IsAssignableFrom(viewType) || typeof(MvxFragmentActivity).IsAssignableFrom(viewType))
+            else if (typeof(Activity).IsAssignableFrom(viewType) || typeof(FragmentActivity).IsAssignableFrom(viewType))
             {
                 details.category = ViewCategory.Activity;
             }

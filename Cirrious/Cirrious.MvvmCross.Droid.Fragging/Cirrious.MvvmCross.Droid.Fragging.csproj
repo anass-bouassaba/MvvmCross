@@ -31,7 +31,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
     <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
   </PropertyGroup>
   <ItemGroup>
@@ -47,23 +46,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fragments\IMvxFragmentView.cs" />
-    <Compile Include="Fragments\EventSource\IMvxEventSourceFragment.cs" />
-    <Compile Include="Fragments\MvxFragmentExtensions.cs" />
-    <Compile Include="Fragments\EventSource\MvxBaseFragmentAdapter.cs" />
-    <Compile Include="Fragments\MvxBindingFragmentAdapter.cs" />
     <Compile Include="Fragments\MvxSimpleLayoutInflater.cs" />
     <Compile Include="MvxCreateViewParameters.cs" />
-    <Compile Include="Fragments\MvxDialogFragment.cs" />
-    <Compile Include="Fragments\EventSource\MvxEventSourceDialogFragment.cs" />
-    <Compile Include="Fragments\EventSource\MvxEventSourceFragment.cs" />
-    <Compile Include="MvxEventSourceFragmentActivity.cs" />
-    <Compile Include="Fragments\EventSource\MvxEventSourceListFragment.cs" />
     <Compile Include="Fragments\MvxFragment.cs" />
     <Compile Include="MvxFragmentActivity.cs" />
-    <Compile Include="Fragments\MvxListFragment.cs" />
     <Compile Include="MvxFragmentViewExtensionMethods.cs" />
     <Compile Include="MvxTabsFragmentActivity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MvxViewPagerActivity.cs" />
+    <Compile Include="MvxViewPagerAdapter.cs" />
+    <Compile Include="MvxActivityViewExtensions.cs" />
+    <Compile Include="MvxFragmentActivityAdapter.cs" />
+    <Compile Include="MvxBindingFragmentActivityAdapter.cs" />
+    <Compile Include="MvxChildViewModelOwnerAdapterFragmentActivity.cs" />
+    <Compile Include="Fragments\EventSource\IMvxEventSourceFragment.cs" />
+    <Compile Include="Fragments\EventSource\MvxEventSourceFragment.cs" />
+    <Compile Include="Fragments\EventSource\MvxBaseFragmentAdapter.cs" />
+    <Compile Include="Fragments\MvxListFragment.cs" />
+    <Compile Include="EventSource\IMvxEventSourceFragmentActivity.cs" />
+    <Compile Include="EventSource\MvxBaseFragmentActivityAdapter.cs" />
+    <Compile Include="EventSource\MvxEventSourceFragmentActivity.cs" />
+    <Compile Include="Fragments\MvxActivityViewExtensions.cs" />
+    <Compile Include="Fragments\MvxBindingFragmentAdapter.cs" />
+    <Compile Include="Fragments\MvxFragmentAdapter.cs" />
+    <Compile Include="Fragments\MvxChildViewModelOwnerAdapterFragment.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CrossCore\Cirrious.CrossCore.Droid\Cirrious.CrossCore.Droid.csproj">
@@ -91,12 +97,6 @@
       <Name>Cirrious.MvvmCross</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <XamarinComponentReference Include="xamandroidsupportv4-18">
-      <Visible>False</Visible>
-      <Version>4.18.1</Version>
-    </XamarinComponentReference>
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -105,4 +105,13 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <XamarinComponentReference Include="xamandroidsupportv4-18">
+      <Version>19.1.0</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EventSource\" />
+  </ItemGroup>
 </Project>

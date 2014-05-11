@@ -15,17 +15,19 @@ using Cirrious.CrossCore;
 using Cirrious.CrossCore.Platform;
 using Cirrious.MvvmCross.Droid.Platform;
 using Cirrious.MvvmCross.Views;
+using Cirrious.MvvmCross.Droid.Fragging.Fragments.EventSource;
+using Cirrious.MvvmCross.Droid.Views;
 
-namespace Cirrious.MvvmCross.Droid.Views
+namespace Cirrious.MvvmCross.Droid.Fragging.Fragments
 {
-    public class MvxFragmentActivityAdapter : MvxBaseFragmentActivityAdapter
+    public class MvxFragmentAdapter : MvxBaseFragmentAdapter
     {
         protected IMvxAndroidView AndroidView
         {
-            get { return Activity as IMvxAndroidView; }
+            get { return Fragment as IMvxAndroidView; }
         }
 
-        public MvxFragmentActivityAdapter(IMvxEventSourceFragmentActivity eventSource)
+        public MvxFragmentAdapter(IMvxEventSourceFragment eventSource)
             : base(eventSource)
         {
         }

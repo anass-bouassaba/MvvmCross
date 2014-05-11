@@ -10,6 +10,7 @@ using Cirrious.MvvmCross.Binding.BindingContext;
 using Cirrious.MvvmCross.Binding.Droid.BindingContext;
 using Cirrious.MvvmCross.Droid.Views;
 using Cirrious.MvvmCross.ViewModels;
+using Cirrious.MvvmCross.Droid.Fragging.EventSource;
 
 namespace Cirrious.MvvmCross.Droid.Fragging
 {

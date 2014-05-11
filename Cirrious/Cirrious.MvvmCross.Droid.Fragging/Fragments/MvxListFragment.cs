@@ -1,42 +1,118 @@
-// MvxListFragment.cs
-// (c) Copyright Cirrious Ltd. http://www.cirrious.com
-// MvvmCross is licensed using Microsoft Public License (Ms-PL)
-// Contributions and inspirations noted in readme.md and license.txt
-// 
-// Project Lead - Stuart Lodge, @slodge, me@slodge.com
+﻿using System;
+using Cirrious.MvvmCross.Binding.Droid.Views;
+using Android.App;
+using Android.Views;
+using Android.OS;
+using Android.Widget;
+using Cirrious.MvvmCross.Binding.Droid.BindingContext;
+using System.Collections.Generic;
+using Cirrious.MvvmCross.Droid.Fragging.Fragments;
 
 namespace Cirrious.MvvmCross.Droid.Fragging.Fragments
 {
-#warning ListFragment not yet really worked out...
-    /*
-    public abstract class MvxListFragment
-        : MvxEventSourceListFragment
-          , IMvxFragmentView
+    public class MvxListFragment : MvxFragment
     {
-        protected MvxListFragment()
+        private ViewGroup _layout;
+
+        public MvxListFragment(Activity activity, MvxListViewResources listViewResources = null, Dictionary<int, string> listItemBindings = null) : base(activity) 
         {
-            this.AddEventListeners();
+            if (listViewResources != null) ListViewResources = listViewResources;
+            if (listItemBindings != null) ListViewItemBindings = listItemBindings;
         }
 
-        public IMvxBindingContext<View> BindingContext { get; set; }
-
-        private object _dataContext;
-        public object DataContext
+        private MvxListView _listView;
+        public MvxListView ListView
         {
-            get { return _dataContext; }
-            set
+            get { return _listView; }
+            set { _listView = value; }
+        }                        
+
+        private MvxListViewResources _listViewResources;
+        public MvxListViewResources ListViewResources
+        {
+            get { return _listViewResources; }
+            set { _listViewResources = value; }
+        }
+
+        private Dictionary<int, string> _listViewItemBindings;
+        public Dictionary<int, string> ListViewItemBindings
+        {
+            get
             {
-                _dataContext = value;
-                if (BindingContext != null)
-                    BindingContext.DataContext = value;
+                if (_listViewItemBindings == null)
+                {
+                    _listViewItemBindings = new Dictionary<int, string>();
+                }
+                return _listViewItemBindings;
+            }
+            set { _listViewItemBindings = value; }
+        }            
+
+        public void AddListViewItemBinding(int viewId, string bindingDescription)
+        {
+            ListViewItemBindings.Add(viewId, bindingDescription);
+        }
+
+        public void SetListViewResources(int container, int list, int item)
+        {
+            ListViewResources = new MvxListViewResources(container, list, item);
+        }
+
+        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        {
+            _layout = (ViewGroup)BindingInflate(ListViewResources.Container);
+            ListView = _layout.FindViewById<MvxListView>(ListViewResources.List);
+            ListView.ItemTemplateId = ListViewResources.Item;
+
+            IMvxBindingDescriptionContainer bindingDescriptionContainer = Activity as IMvxBindingDescriptionContainer;
+            if (bindingDescriptionContainer != null)
+            {
+                foreach (KeyValuePair<int, string> entry in ListViewItemBindings)
+                {
+                    if (!bindingDescriptionContainer.BindingDescriptions.ContainsKey(entry.Key))
+                    {
+                        bindingDescriptionContainer.BindingDescriptions.Add(entry.Key, entry.Value);
+                    }
+                }
+            }
+
+            return _layout;
+        }           
+
+        public class MvxListViewResources
+        {
+            public int _container;
+            public int Container
+            {
+                get { return _container; }
+                set { _container = value; }
+            }
+
+            public int _list;
+            public int List
+            {
+                get { return _list; }
+                set { _list = value; }
+            }
+
+            public int _item;
+            public int Item
+            {
+                get { return _item; }
+                set { _item = value; }
+            }
+
+            public MvxListViewResources()
+            {
+            }
+
+            public MvxListViewResources(int container, int list, int item)
+            {
+                Container = container;
+                List = list;
+                Item = item;
             }
         }
-
-        public IMvxViewModel ViewModel
-        {
-            get { return DataContext as IMvxViewModel; }
-            set { DataContext = value; }
-        }
     }
-     */
 }
+

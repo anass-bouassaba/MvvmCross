@@ -22,7 +22,7 @@ using FragmentManager = Android.Support.V4.App.FragmentManager;
 using FragmentPagerAdapter = Android.Support.V4.App.FragmentPagerAdapter;
 using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
 
-namespace Cirrious.MvvmCross.Droid.Views
+namespace Cirrious.MvvmCross.Droid.Fragging
 {
     public class MvxViewPagerAdapter : FragmentPagerAdapter
     {

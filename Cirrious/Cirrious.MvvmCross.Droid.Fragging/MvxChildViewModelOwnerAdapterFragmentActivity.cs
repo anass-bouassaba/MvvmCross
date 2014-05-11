@@ -8,8 +8,10 @@
 using System;
 using Cirrious.CrossCore.Droid.Views;
 using Cirrious.CrossCore.Exceptions;
+using Cirrious.MvvmCross.Droid.Fragging.EventSource;
+using Cirrious.MvvmCross.Droid.Views;
 
-namespace Cirrious.MvvmCross.Droid.Views
+namespace Cirrious.MvvmCross.Droid.Fragging
 {
     public class MvxChildViewModelOwnerAdapterFragmentActivity : MvxBaseFragmentActivityAdapter
     {

@@ -1,4 +1,4 @@
-// MvxEventSourceFragment.cs
+﻿// MvxEventSourceFragmentActivity.cs
 // (c) Copyright Cirrious Ltd. http://www.cirrious.com
 // MvvmCross is licensed using Microsoft Public License (Ms-PL)
 // Contributions and inspirations noted in readme.md and license.txt
@@ -7,40 +7,89 @@
 
 using System;
 using Android.App;
+using Android.Content;
 using Android.OS;
-using Android.Support.V4.App;
-using Android.Views;
 using Cirrious.CrossCore.Core;
+using Fragment = Android.Support.V4.App.Fragment;
 using Cirrious.CrossCore.Droid.Views;
 
 namespace Cirrious.MvvmCross.Droid.Fragging.Fragments.EventSource
 {
-    public class MvxEventSourceFragment
+    public abstract class MvxEventSourceFragment
         : Fragment
           , IMvxEventSourceFragment
-    {
-        public event EventHandler DisposeCalled;
-        public event EventHandler<MvxValueEventArgs<MvxCreateViewParameters>> OnCreateViewCalled;
-        public event EventHandler OnDestroyViewCalled;
-        public event EventHandler<MvxValueEventArgs<Activity>> OnAttachCalled;
-
-        public override void OnAttach(Activity activity)
+    {	
+        public override void OnCreate(Bundle bundle)
         {
-            OnAttachCalled.Raise(this, activity);
+            CreateWillBeCalled.Raise(this, bundle);
+            base.OnCreate(bundle);
+            CreateCalled.Raise(this, bundle);
+        }
+
+        public override void OnAttach(Android.App.Activity activity)
+        {
             base.OnAttach(activity);
         }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override void OnDestroy()
         {
-            OnCreateViewCalled.Raise(this, new MvxCreateViewParameters(inflater, container, savedInstanceState));
-            return base.OnCreateView(inflater, container, savedInstanceState);
+            DestroyCalled.Raise(this);
+            base.OnDestroy();
+        }            
+
+        public override void OnResume()
+        {
+            base.OnResume();
+            ResumeCalled.Raise(this);
+        }
+
+        public override void OnPause()
+        {
+            PauseCalled.Raise(this);
+            base.OnPause();
+        }
+
+        public override void OnStart()
+        {
+            base.OnStart();
+            StartCalled.Raise(this);
+        }            
+
+        public override void OnDetach()
+        {
+            base.OnDetach();
+            // TODO DetachCalled.Raise(this);
         }
 
         public override void OnDestroyView()
         {
-            OnDestroyViewCalled.Raise(this);
             base.OnDestroyView();
+            // TODO OnDestroyViewCalled.Raise(this);
         }
+
+        public override void OnStop()
+        {
+            StopCalled.Raise(this);
+            base.OnStop();
+        }
+
+        public override void OnSaveInstanceState(Bundle outState)
+        {
+            SaveInstanceStateCalled.Raise(this, outState);
+            base.OnSaveInstanceState(outState);
+        }            
+
+        public override void StartActivityForResult(Intent intent, int requestCode)
+        {
+            StartActivityForResultCalled.Raise(this, new MvxStartActivityForResultParameters(intent, requestCode));
+            base.StartActivityForResult(intent, requestCode);
+        }            
+
+        /*public override void OnActivityResult(int requestCode, int resultCode, Intent data)
+        {
+            ActivityResultCalled.Raise(Activity, new MvxActivityResultParameters(requestCode, (Result)resultCode, data));
+            base.OnActivityResult(requestCode, resultCode, data);
+        }*/
 
         protected override void Dispose(bool disposing)
         {
@@ -50,5 +99,19 @@ namespace Cirrious.MvvmCross.Droid.Fragging.Fragments.EventSource
             }
             base.Dispose(disposing);
         }
+
+        public event EventHandler DisposeCalled;
+        public event EventHandler<MvxValueEventArgs<Bundle>> CreateWillBeCalled;
+        public event EventHandler<MvxValueEventArgs<Bundle>> CreateCalled;
+        public event EventHandler DestroyCalled;
+        public event EventHandler ResumeCalled;
+        public event EventHandler PauseCalled;
+        public event EventHandler StartCalled;
+        public event EventHandler RestartCalled;
+        public event EventHandler StopCalled;
+        public event EventHandler<MvxValueEventArgs<Bundle>> SaveInstanceStateCalled;
+        public event EventHandler<MvxValueEventArgs<MvxStartActivityForResultParameters>> StartActivityForResultCalled;
+        public event EventHandler<MvxValueEventArgs<MvxActivityResultParameters>> ActivityResultCalled;
     }
 }
+

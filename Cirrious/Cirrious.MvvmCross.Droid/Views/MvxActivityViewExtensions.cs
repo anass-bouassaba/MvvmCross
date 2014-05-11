@@ -37,39 +37,7 @@ namespace Cirrious.MvvmCross.Droid.Views
             {
                 var childOwnerAdapter = new MvxChildViewModelOwnerAdapter(activity);
             }
-        }
-
-        public static void AddEventListeners(this IMvxEventSourceFragmentActivity fragmentActivity)
-        {
-            if (fragmentActivity is IMvxAndroidView)
-            {
-                var adapter = new MvxFragmentActivityAdapter(fragmentActivity);
-            }
-            if (fragmentActivity is IMvxBindingContextOwner)
-            {
-                var bindingAdapter = new MvxBindingFragmentActivityAdapter(fragmentActivity);
-            }
-            if (fragmentActivity is IMvxChildViewModelOwner)
-            {
-                var childOwnerAdapter = new MvxChildViewModelOwnerAdapterFragmentActivity(fragmentActivity);
-            }
-        }
-
-        public static void AddEventListeners(this IMvxEventSourceFragment fragment)
-        {
-            if (fragment is IMvxAndroidView)
-            {
-                var adapter = new MvxFragmentAdapter(fragment);
-            }
-            if (fragment is IMvxBindingContextOwner)
-            {
-                var bindingAdapter = new MvxBindingFragmentAdapter(fragment);
-            }
-            if (fragment is IMvxChildViewModelOwner)
-            {
-                var childOwnerAdapter = new MvxChildViewModelOwnerAdapterFragment(fragment);
-            }
-        }
+        }            
 
         public static void OnViewCreate(this IMvxAndroidView androidView, Bundle bundle)
         {
@@ -178,10 +146,10 @@ namespace Cirrious.MvvmCross.Droid.Views
 
             var translatorService = Mvx.Resolve<IMvxAndroidViewModelLoader>();
 
-            if (androidView is MvxFragment)
+            if (androidView is IMvxParameterValuesContainer)
             {
-                MvxFragment f = androidView as MvxFragment;
-                var viewModel = translatorService.LoadWithParameters(f.ParameterValues, savedState, viewModelType);
+                IMvxParameterValuesContainer parameterValuesContainer = androidView as IMvxParameterValuesContainer;
+                var viewModel = translatorService.LoadWithParameters(parameterValuesContainer.ParameterValues, savedState, viewModelType);
                 return viewModel;
             }
             else

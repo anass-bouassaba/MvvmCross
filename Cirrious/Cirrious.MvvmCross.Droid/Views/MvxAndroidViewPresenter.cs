@@ -51,19 +51,28 @@ namespace Cirrious.MvvmCross.Droid.Views
             }
             else if (viewDetails.category == ViewCategory.Fragment)
             {
-                MvxViewPagerActivity fragmentActivity = Activity as MvxViewPagerActivity;
+                IMvxChildViewContainer fragmentActivity = Activity as IMvxChildViewContainer;
                 if (fragmentActivity != null)
                 {
-                    MvxViewPagerActivity.MvxRootFragment currentFragment = fragmentActivity.CurrentRootFragment;
-                    MvxFragment newFragment = (MvxFragment)Activator.CreateInstance(viewDetails.type, fragmentActivity);
+                    Fragment currentFragment = (Fragment)fragmentActivity.CurrentChildView;
+                    IMvxParameterValuesContainer newFragment = (IMvxParameterValuesContainer)Activator.CreateInstance(viewDetails.type, fragmentActivity);
                     newFragment.ParameterValues = request.ParameterValues;
 
                     FragmentTransaction trans = currentFragment.FragmentManager.BeginTransaction();
-                    trans.Replace(currentFragment.Layout.Id, newFragment);
-                    trans.AddToBackStack(null);
-                    trans.Commit();
+                    IMvxViewGroupContainer rootFragment = currentFragment as IMvxViewGroupContainer;
+                    if (rootFragment != null)
+                    {
+                        Fragment fragmentToReplace = newFragment as Fragment;
+                        trans.Replace(rootFragment.Layout.Id, fragmentToReplace);
+                        trans.AddToBackStack(null);
+                        trans.Commit();
 
-                    currentFragment.Stack.Push(newFragment);
+                        IMvxParameterValuesStackContainer stackContainer = currentFragment as IMvxParameterValuesStackContainer;
+                        if (stackContainer != null)
+                        {
+                            stackContainer.Stack.Push(newFragment);
+                        }
+                    }
                 }
             }
         }

@@ -18,12 +18,14 @@ using Cirrious.MvvmCross.Binding.Droid.BindingContext;
 using Cirrious.MvvmCross.ViewModels;
 using Fragment = Android.Support.V4.App.Fragment;
 using FragmentTransaction = Android.Support.V4.App.FragmentTransaction;
+using Cirrious.MvvmCross.Droid.Views;
+using Cirrious.MvvmCross.Droid.Fragging.Fragments;
 
-namespace Cirrious.MvvmCross.Droid.Views
+namespace Cirrious.MvvmCross.Droid.Fragging
 {
     public abstract class MvxViewPagerActivity
         : MvxFragmentActivity
-          , IMvxAndroidView
+          , IMvxChildViewContainer
     {
         protected MvxViewPagerActivity() : base()
         {
@@ -58,7 +60,8 @@ namespace Cirrious.MvvmCross.Droid.Views
             set { _rootFragments = value; }
         }
 
-        public MvxRootFragment CurrentRootFragment
+        #region IMvxChildViewContainer implementation
+        public IMvxViewGroupContainer CurrentChildView
         {
             get
             {
@@ -70,6 +73,8 @@ namespace Cirrious.MvvmCross.Droid.Views
                 return RootFragments[ViewPager.CurrentItem] as MvxRootFragment;
             }
         }
+        #endregion
+
 
         public void AddPage(MvxFragment f, int iconId, string title, int containerId)
         {
@@ -80,28 +85,15 @@ namespace Cirrious.MvvmCross.Droid.Views
             rf.Stack.Push(f);
 
             RootFragments.Add(rf);
-        }            
-
-        /*
-         * When the ActionBar home button is pressed, the bindings are not reloaded
-         * on the parent activity, this override forces the ActionBar home button
-         * to trigger the same lifecycle behavior as the hardware button
-         */
-        public override bool OnOptionsItemSelected(Android.Views.IMenuItem item)
-        {
-            switch (item.ItemId) {
-                // Respond to the action bar's Up/Home button
-                case Android.Resource.Id.Home:
-                    OnBackPressed();
-                    return true;
-            }
-            return base.OnOptionsItemSelected(item);
         }
 
         /**
          * The following class makes sense only for an MvxViewPagerActivity
          */
-        public class MvxRootFragment : Fragment
+        public class MvxRootFragment 
+            : Fragment
+              , IMvxViewGroupContainer
+        , IMvxParameterValuesStackContainer
         {
             public MvxRootFragment() : base()
             {
@@ -111,13 +103,15 @@ namespace Cirrious.MvvmCross.Droid.Views
             {
                 get { return Activity as MvxViewPagerActivity; }
             }
-
-            LinearLayout _layout;
-            public LinearLayout Layout
+                
+            #region IMvxRootFragment implementation
+            ViewGroup _layout;
+            public ViewGroup Layout
             {
                 get { return _layout; }
                 set { _layout = value; }
             }
+            #endregion
 
             string _title;
             public string Title
@@ -138,28 +132,30 @@ namespace Cirrious.MvvmCross.Droid.Views
             {
                 get { return _containerId; }
                 set { _containerId = value; }
-            }
+            }                
 
-            Stack<MvxFragment> _stack;
-            public Stack<MvxFragment> Stack
+            #region IMvxViewGroupStackContainer implementation
+            Stack<IMvxParameterValuesContainer> _stack;
+            public Stack<IMvxParameterValuesContainer> Stack
             {
                 get
                 {
                     if (_stack == null)
                     {
-                        _stack = new Stack<MvxFragment>();
+                        _stack = new Stack<IMvxParameterValuesContainer>();
                     }
                     return _stack;
                 }
                 set { _stack = value; }
             }
+            #endregion
 
             public override View OnCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
             {
                 Layout = (LinearLayout)inflater.Inflate(ContainerId, container, false);
 
                 FragmentTransaction ft = FragmentManager.BeginTransaction();
-                Fragment firstChildFragment = Stack.Peek();
+                Fragment firstChildFragment = (Fragment)Stack.Peek();
                 ft.Replace(_layout.Id, firstChildFragment);
                 ft.Commit();
 

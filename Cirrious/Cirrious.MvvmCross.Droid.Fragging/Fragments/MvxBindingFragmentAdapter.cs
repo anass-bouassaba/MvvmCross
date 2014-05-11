@@ -1,4 +1,4 @@
-// MvxBindingFragmentAdapter.cs
+﻿// MvxBindingActivityAdapter.cs
 // (c) Copyright Cirrious Ltd. http://www.cirrious.com
 // MvvmCross is licensed using Microsoft Public License (Ms-PL)
 // Contributions and inspirations noted in readme.md and license.txt
@@ -6,7 +6,11 @@
 // Project Lead - Stuart Lodge, @slodge, me@slodge.com
 
 using System;
+using Android.OS;
 using Cirrious.CrossCore.Core;
+using Cirrious.CrossCore.Droid.Views;
+using Cirrious.MvvmCross.Binding.BindingContext;
+using Cirrious.MvvmCross.Binding.Droid.BindingContext;
 using Cirrious.MvvmCross.Droid.Fragging.Fragments.EventSource;
 
 namespace Cirrious.MvvmCross.Droid.Fragging.Fragments
@@ -14,40 +18,37 @@ namespace Cirrious.MvvmCross.Droid.Fragging.Fragments
     public class MvxBindingFragmentAdapter
         : MvxBaseFragmentAdapter
     {
-        protected IMvxFragmentView FragmentView
+        private IMvxAndroidBindingContext BindingContext
         {
-            get { return base.Fragment as IMvxFragmentView; }
+            get
+            {
+                var contextOwner = (IMvxBindingContextOwner) Fragment;
+                return (IMvxAndroidBindingContext) contextOwner.BindingContext;
+            }
         }
 
         public MvxBindingFragmentAdapter(IMvxEventSourceFragment eventSource)
             : base(eventSource)
         {
-            if (!(eventSource is IMvxFragmentView))
-                throw new ArgumentException("eventSource must be an IMvxFragmentView");
         }
 
-        protected override void HandleCreateViewCalled(object sender,
-                                                       MvxValueEventArgs<MvxCreateViewParameters> args)
+        protected override void EventSourceOnCreateWillBeCalled(object sender,
+            MvxValueEventArgs<Bundle> MvxValueEventArgs)
         {
-            FragmentView.EnsureBindingContextIsSet(args.Value.Inflater);
+            BindingContext.ClearAllBindings();
+            base.EventSourceOnCreateWillBeCalled(sender, MvxValueEventArgs);
         }
 
-        protected override void HandleDestroyViewCalled(object sender, EventArgs eventArgs)
+        protected override void EventSourceOnDestroyCalled(object sender, EventArgs eventArgs)
         {
-            if (FragmentView.BindingContext != null)
-            {
-                FragmentView.BindingContext.ClearAllBindings();
-            }
-            base.HandleDestroyViewCalled(sender, eventArgs);
+            BindingContext.ClearAllBindings();
+            base.EventSourceOnDestroyCalled(sender, eventArgs);
         }
 
-        protected override void HandleDisposeCalled(object sender, EventArgs e)
+        protected override void EventSourceOnDisposeCalled(object sender, EventArgs eventArgs)
         {
-            if (FragmentView.BindingContext != null)
-            {
-                FragmentView.BindingContext.ClearAllBindings();
-            }
-            base.HandleDisposeCalled(sender, e);
+            BindingContext.ClearAllBindings();
+            base.EventSourceOnDisposeCalled(sender, eventArgs);
         }
     }
 }

@@ -1,4 +1,4 @@
-// MvxBaseFragmentAdapter.cs
+﻿// MvxBaseActivityAdapter.cs
 // (c) Copyright Cirrious Ltd. http://www.cirrious.com
 // MvvmCross is licensed using Microsoft Public License (Ms-PL)
 // Contributions and inspirations noted in readme.md and license.txt
@@ -7,8 +7,12 @@
 
 using System;
 using Android.App;
-using Android.Support.V4.App;
+using Android.Content;
+using Android.OS;
 using Cirrious.CrossCore.Core;
+using Fragment = Android.Support.V4.App.Fragment;
+using Cirrious.MvvmCross.Droid.Fragging.Fragments.EventSource;
+using Cirrious.CrossCore.Droid.Views;
 
 namespace Cirrious.MvvmCross.Droid.Fragging.Fragments.EventSource
 {
@@ -23,33 +27,79 @@ namespace Cirrious.MvvmCross.Droid.Fragging.Fragments.EventSource
 
         public MvxBaseFragmentAdapter(IMvxEventSourceFragment eventSource)
         {
-            if (eventSource == null)
-                throw new ArgumentException("eventSource - eventSource should not be null");
-
-            if (!(eventSource is Fragment))
-                throw new ArgumentException("eventSource - eventSource should be a Fragment");
-
             _eventSource = eventSource;
-            _eventSource.DisposeCalled += HandleDisposeCalled;
-            _eventSource.OnCreateViewCalled += HandleCreateViewCalled;
-            _eventSource.OnDestroyViewCalled += HandleDestroyViewCalled;
-            _eventSource.OnAttachCalled += HandleAttachCalled;
+
+            _eventSource.CreateCalled += EventSourceOnCreateCalled;
+            _eventSource.CreateWillBeCalled += EventSourceOnCreateWillBeCalled;
+            _eventSource.StartCalled += EventSourceOnStartCalled;
+            _eventSource.RestartCalled += EventSourceOnRestartCalled;
+            _eventSource.ResumeCalled += EventSourceOnResumeCalled;
+            _eventSource.PauseCalled += EventSourceOnPauseCalled;
+            _eventSource.StopCalled += EventSourceOnStopCalled;
+            _eventSource.DestroyCalled += EventSourceOnDestroyCalled;
+            _eventSource.DisposeCalled += EventSourceOnDisposeCalled;
+            _eventSource.SaveInstanceStateCalled += EventSourceOnSaveInstanceStateCalled;
+
+            _eventSource.ActivityResultCalled += EventSourceOnActivityResultCalled;
+            _eventSource.StartActivityForResultCalled += EventSourceOnStartActivityForResultCalled;
         }
 
-        protected virtual void HandleAttachCalled(object sender, MvxValueEventArgs<Activity> e)
+        protected virtual void EventSourceOnSaveInstanceStateCalled(object sender,
+            MvxValueEventArgs<Bundle> mvxValueEventArgs)
         {
         }
 
-        protected virtual void HandleDisposeCalled(object sender, EventArgs e)
+        protected virtual void EventSourceOnCreateWillBeCalled(object sender,
+            MvxValueEventArgs<Bundle> MvxValueEventArgs)
         {
         }
 
-        protected virtual void HandleDestroyViewCalled(object sender, EventArgs eventArgs)
+        protected virtual void EventSourceOnStopCalled(object sender, EventArgs eventArgs)
         {
         }
 
-        protected virtual void HandleCreateViewCalled(object sender,
-                                                      MvxValueEventArgs<MvxCreateViewParameters> mvxValueEventArgs)
+        protected virtual void EventSourceOnStartCalled(object sender, EventArgs eventArgs)
+        {
+        }
+
+        protected virtual void EventSourceOnStartActivityForResultCalled(object sender,
+            MvxValueEventArgs
+            <MvxStartActivityForResultParameters>
+            MvxValueEventArgs)
+        {
+        }
+
+        protected virtual void EventSourceOnResumeCalled(object sender, EventArgs eventArgs)
+        {
+        }
+
+        protected virtual void EventSourceOnRestartCalled(object sender, EventArgs eventArgs)
+        {
+        }
+
+        protected virtual void EventSourceOnPauseCalled(object sender, EventArgs eventArgs)
+        {
+        }
+
+        protected virtual void EventSourceOnNewIntentCalled(object sender, MvxValueEventArgs<Intent> MvxValueEventArgs)
+        {
+        }
+
+        protected virtual void EventSourceOnDisposeCalled(object sender, EventArgs eventArgs)
+        {
+        }
+
+        protected virtual void EventSourceOnDestroyCalled(object sender, EventArgs eventArgs)
+        {
+        }
+
+        protected virtual void EventSourceOnCreateCalled(object sender, MvxValueEventArgs<Bundle> MvxValueEventArgs)
+        {
+        }
+
+        protected virtual void EventSourceOnActivityResultCalled(object sender,
+            MvxValueEventArgs<MvxActivityResultParameters>
+            MvxValueEventArgs)
         {
         }
     }

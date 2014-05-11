@@ -10,20 +10,21 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Cirrious.CrossCore.Core;
-using Fragment = Android.Support.V4.App.Fragment;
+using Cirrious.MvvmCross.Droid.Fragging.Fragments.EventSource;
+using Cirrious.CrossCore.Droid.Views;
 
-namespace Cirrious.CrossCore.Droid.Views
+namespace Cirrious.MvvmCross.Droid.Fragging.EventSource
 {
-    public class MvxBaseFragmentAdapter
+    public class MvxBaseFragmentActivityAdapter
     {
-        private readonly IMvxEventSourceFragment _eventSource;
+        private readonly IMvxEventSourceFragmentActivity _eventSource;
 
-        protected Fragment Fragment
+        protected Activity Activity
         {
-            get { return _eventSource as Fragment; }
+            get { return _eventSource as Activity; }
         }
 
-        public MvxBaseFragmentAdapter(IMvxEventSourceFragment eventSource)
+        public MvxBaseFragmentActivityAdapter(IMvxEventSourceFragmentActivity eventSource)
         {
             _eventSource = eventSource;
 
@@ -37,6 +38,7 @@ namespace Cirrious.CrossCore.Droid.Views
             _eventSource.DestroyCalled += EventSourceOnDestroyCalled;
             _eventSource.DisposeCalled += EventSourceOnDisposeCalled;
             _eventSource.SaveInstanceStateCalled += EventSourceOnSaveInstanceStateCalled;
+            _eventSource.NewIntentCalled += EventSourceOnNewIntentCalled;
 
             _eventSource.ActivityResultCalled += EventSourceOnActivityResultCalled;
             _eventSource.StartActivityForResultCalled += EventSourceOnStartActivityForResultCalled;

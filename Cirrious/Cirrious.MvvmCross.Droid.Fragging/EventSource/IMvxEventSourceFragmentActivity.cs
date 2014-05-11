@@ -9,15 +9,16 @@ using System;
 using Android.Content;
 using Android.OS;
 using Cirrious.CrossCore.Core;
-using Android.App;
+using Cirrious.CrossCore.Droid.Views;
 
-namespace Cirrious.CrossCore.Droid.Views
+namespace Cirrious.MvvmCross.Droid.Fragging.EventSource
 {
-    public interface IMvxEventSourceFragment : IMvxDisposeSource
+    public interface IMvxEventSourceFragmentActivity : IMvxDisposeSource
     {
         event EventHandler<MvxValueEventArgs<Bundle>> CreateWillBeCalled;
         event EventHandler<MvxValueEventArgs<Bundle>> CreateCalled;
         event EventHandler DestroyCalled;
+        event EventHandler<MvxValueEventArgs<Intent>> NewIntentCalled;
         event EventHandler ResumeCalled;
         event EventHandler PauseCalled;
         event EventHandler StartCalled;

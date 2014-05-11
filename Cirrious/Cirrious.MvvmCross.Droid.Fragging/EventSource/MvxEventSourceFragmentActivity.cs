@@ -11,8 +11,9 @@ using Android.Content;
 using Android.OS;
 using Cirrious.CrossCore.Core;
 using FragmentActivity = Android.Support.V4.App.FragmentActivity;
+using Cirrious.CrossCore.Droid.Views;
 
-namespace Cirrious.CrossCore.Droid.Views
+namespace Cirrious.MvvmCross.Droid.Fragging.EventSource
 {
     public abstract class MvxEventSourceFragmentActivity
         : FragmentActivity
