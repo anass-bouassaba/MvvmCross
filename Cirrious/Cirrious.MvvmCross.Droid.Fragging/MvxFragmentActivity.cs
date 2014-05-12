@@ -11,12 +11,14 @@ using Cirrious.MvvmCross.Binding.Droid.BindingContext;
 using Cirrious.MvvmCross.Droid.Views;
 using Cirrious.MvvmCross.ViewModels;
 using Cirrious.MvvmCross.Droid.Fragging.EventSource;
+using System.Collections.Generic;
 
 namespace Cirrious.MvvmCross.Droid.Fragging
 {
     public class MvxFragmentActivity
         : MvxEventSourceFragmentActivity
           , IMvxAndroidView
+          , IMvxBindingDescriptionContainer
     {
         protected MvxFragmentActivity()
         {
@@ -56,5 +58,24 @@ namespace Cirrious.MvvmCross.Droid.Fragging
             var view = this.BindingInflate(layoutResId, null);
             SetContentView(view);
         }
+
+        #region IMvxBindingDescriptionContainer implementation
+        public void Bind(int viewId, string bindingDescription)
+        {
+            throw new System.NotImplementedException();
+        }
+        public Dictionary<int, string> _bindingDescriptions;
+        public Dictionary<int, string> BindingDescriptions
+        {
+            get
+            {
+                if (_bindingDescriptions == null)
+                {
+                    _bindingDescriptions = new Dictionary<int, string>();
+                }
+                return _bindingDescriptions;
+            }
+        }
+        #endregion
     }
 }
