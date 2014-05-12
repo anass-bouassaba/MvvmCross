@@ -77,5 +77,21 @@ namespace Cirrious.MvvmCross.Droid.Fragging
             }
         }
         #endregion
+
+        /*
+         * When the ActionBar home button is pressed, the bindings are not reloaded
+         * on the parent activity, this override forces the ActionBar home button
+         * to trigger the same lifecycle behavior as the hardware button
+         */
+        public override bool OnOptionsItemSelected(Android.Views.IMenuItem item)
+        {
+            switch (item.ItemId) {
+                // Respond to the action bar's Up/Home button
+                case Android.Resource.Id.Home:
+                    OnBackPressed();
+                    return true;
+            }
+            return base.OnOptionsItemSelected(item);
+        }
     }
 }
