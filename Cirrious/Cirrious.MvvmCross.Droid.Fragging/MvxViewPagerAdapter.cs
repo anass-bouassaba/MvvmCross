@@ -26,6 +26,8 @@ namespace Cirrious.MvvmCross.Droid.Fragging
 {
     public class MvxViewPagerAdapter : FragmentPagerAdapter
     {
+        int _primaryItemPosition;
+
         protected MvxViewPagerActivity _viewPagerActivity;
         public MvxViewPagerActivity ViewPagerActivity
         {
@@ -67,6 +69,25 @@ namespace Cirrious.MvvmCross.Droid.Fragging
         public override int GetItemPosition(Java.Lang.Object @object)
         {
             return PositionNone;
+        }
+
+        public override void SetPrimaryItem(ViewGroup container, int position, Java.Lang.Object @object)
+        {
+            base.SetPrimaryItem(container, position, @object);
+            _primaryItemPosition = position;
+        }
+
+        public override void FinishUpdate(ViewGroup container)
+        {
+            base.FinishUpdate(container);
+
+            MvxViewPagerActivity.MvxRootFragment rootFragment = GetItem(_primaryItemPosition) as MvxViewPagerActivity.MvxRootFragment;
+            if (rootFragment != null) {
+                INotifyViewPagerItemChanged childFragment = rootFragment.Stack.Peek() as INotifyViewPagerItemChanged;
+                if (childFragment != null) {
+                    childFragment.FinishUpdate();
+                }
+            }
         }
 
         public override void DestroyItem(View container, int position, Java.Lang.Object @object) {}

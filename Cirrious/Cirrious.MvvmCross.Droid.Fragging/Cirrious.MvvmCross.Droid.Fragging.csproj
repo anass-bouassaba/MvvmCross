@@ -71,6 +71,7 @@
     <Compile Include="Fragments\MvxBindingFragmentAdapter.cs" />
     <Compile Include="Fragments\MvxFragmentAdapter.cs" />
     <Compile Include="Fragments\MvxChildViewModelOwnerAdapterFragment.cs" />
+    <Compile Include="INotifyPageIndicatorStatusChanged.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CrossCore\Cirrious.CrossCore.Droid\Cirrious.CrossCore.Droid.csproj">
