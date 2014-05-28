@@ -87,6 +87,19 @@ namespace Cirrious.MvvmCross.Droid.Fragging
             RootFragments.Add(rf);
         }
 
+        public override bool OnOptionsItemSelected(Android.Views.IMenuItem item)
+        {
+            switch (item.ItemId) {
+                // Respond to the action bar's Up/Home button
+                case Android.Resource.Id.Home:
+                    MvxRootFragment currentRootFragment = CurrentChildView as MvxRootFragment;
+                    currentRootFragment.Stack.Pop();
+                    OnBackPressed();
+                    return true;
+            }
+            return base.OnOptionsItemSelected(item);
+        }
+
         /**
          * The following class makes sense only for an MvxViewPagerActivity
          */
