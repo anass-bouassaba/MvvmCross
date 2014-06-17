@@ -82,7 +82,8 @@
   -->
   <ItemGroup>
     <XamarinComponentReference Include="xamandroidsupportv4-18">
-      <Version>19.1.0</Version>
+      <InstallationInProgress>True</InstallationInProgress>
+      <Version>4.19.0.1</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
   </ItemGroup>

@@ -44,7 +44,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="Xamarin.Android.Support.v4">
-      <HintPath>..\..\..\Components\xamandroidsupportv4-18-19.1.0\lib\android\Xamarin.Android.Support.v4.dll</HintPath>
+      <HintPath>..\..\..\..\Components\xamandroidsupportv4-18-4.19.0.1\lib\android\Xamarin.Android.Support.v4.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -127,7 +127,8 @@
   -->
   <ItemGroup>
     <XamarinComponentReference Include="xamandroidsupportv4-18">
-      <Version>19.1.0</Version>
+      <InstallationInProgress>True</InstallationInProgress>
+      <Version>4.19.0.1</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
   </ItemGroup>
