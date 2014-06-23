@@ -17,6 +17,7 @@
     <AndroidStoreUncompressedFileExtensions />
     <TargetFrameworkVersion>v3.1</TargetFrameworkVersion>
     <MandroidI18n />
+    <AndroidUseLatestPlatformSdk />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>

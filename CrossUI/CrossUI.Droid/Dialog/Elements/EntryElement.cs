@@ -107,7 +107,7 @@ namespace CrossUI.Droid.Dialog.Elements
             //android can't seem to find the correct NextFocusDown if items are added dynamically, we'll catch the next/previous ourselves
             _entry.EditorAction += (sender, args) =>
                 {
-                    if (args.ActionId == ImeAction.Next || args.ActionId == ImeAction.Previous)
+                    if (args.ActionId == ImeAction.Next)
                     {
                         ViewGroup group = _entry.Parent as ViewGroup;
                         IViewParent currentLoop = _entry.Parent;
