@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 	<metadata>
 		<id>MvvmCross.HotCoffee.Droid.Fragging</id>
-		<version>1.0.0-alpha1</version>
+		<version>1.0.1-alpha1</version>
 		<title>MvvmCross - Hot Coffee Droid Fragment Support</title>
 		<authors>MvvmCross, DigitalPatrioten AG</authors>
 		<owners>Stuart Lodge</owners>
@@ -15,7 +15,7 @@
 	<files>		
 	
 		<!-- droid -->
-		<file src="../bin/Release/Mvx/Droid/Cirrious.MvvmCross.Droid.Fragging.dll" target="lib/MonoAndroid/Cirrious.MvvmCross.Droid.Fragging.dll" />
+		<file src="..\bin\Release\Mvx\Droid\Cirrious.MvvmCross.Droid.Fragging.dll" target="lib\MonoAndroid\Cirrious.MvvmCross.Droid.Fragging.dll" />
 		
 	</files>
 </package>
