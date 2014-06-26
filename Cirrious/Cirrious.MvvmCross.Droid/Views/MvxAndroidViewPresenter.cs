@@ -51,29 +51,29 @@ namespace Cirrious.MvvmCross.Droid.Views
             }
             else if (viewDetails.category == ViewCategory.Fragment)
             {
-                IMvxChildViewContainer fragmentActivity = Activity as IMvxChildViewContainer;
-                if (fragmentActivity != null)
-                {
-                    Fragment currentFragment = (Fragment)fragmentActivity.CurrentChildView;
-                    IMvxParameterValuesContainer newFragment = (IMvxParameterValuesContainer)Activator.CreateInstance(viewDetails.type, fragmentActivity);
-                    newFragment.ParameterValues = request.ParameterValues;
-
-                    FragmentTransaction trans = currentFragment.FragmentManager.BeginTransaction();
-                    IMvxViewGroupContainer rootFragment = currentFragment as IMvxViewGroupContainer;
-                    if (rootFragment != null)
-                    {
-                        Fragment fragmentToReplace = newFragment as Fragment;
-                        trans.Replace(rootFragment.Layout.Id, fragmentToReplace);
-                        trans.AddToBackStack(null);
-                        trans.Commit();
-
-                        IMvxParameterValuesStackContainer stackContainer = currentFragment as IMvxParameterValuesStackContainer;
-                        if (stackContainer != null)
-                        {
-                            stackContainer.Stack.Push(newFragment);
-                        }
-                    }
-                }
+//                IMvxChildViewContainer fragmentActivity = Activity as IMvxChildViewContainer;
+//                if (fragmentActivity != null)
+//                {
+//                    Fragment currentFragment = (Fragment)fragmentActivity.CurrentChildView;
+//                    IMvxParameterValuesContainer newFragment = (IMvxParameterValuesContainer)Activator.CreateInstance(viewDetails.type, fragmentActivity);
+//                    newFragment.ParameterValues = request.ParameterValues;
+//
+//                    FragmentTransaction trans = currentFragment.FragmentManager.BeginTransaction();
+//                    IMvxViewGroupContainer rootFragment = currentFragment as IMvxViewGroupContainer;
+//                    if (rootFragment != null)
+//                    {
+//                        Fragment fragmentToReplace = newFragment as Fragment;
+//                        trans.Replace(rootFragment.Layout.Id, fragmentToReplace);
+//                        trans.AddToBackStack(null);
+//                        trans.Commit();
+//
+//                        IMvxParameterValuesStackContainer stackContainer = currentFragment as IMvxParameterValuesStackContainer;
+//                        if (stackContainer != null)
+//                        {
+//                            stackContainer.Stack.Push(newFragment);
+//                        }
+//                    }
+//                }
             }
         }
 
