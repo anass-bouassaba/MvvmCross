@@ -88,6 +88,12 @@ namespace Cirrious.MvvmCross.Droid.Fragging.Fragments
             var view = this.BindingInflate(layoutResId, null);
             return view;
         }
+        
+        public View InflateWithBinding(int layoutResId, ViewGroup viewGroup, bool attachToParent) 
+        {
+            var view = this.BindingInflate(layoutResId, viewGroup, attachToParent);
+            return view;
+        }
 
         protected virtual void OnViewModelSet()
         {
